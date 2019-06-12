@@ -8,6 +8,21 @@ RUN dpkg-reconfigure -f noninteractive tzdata
 RUN wget -O /usr/local/bin/gitlab-runner https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64
 RUN chmod +x /usr/local/bin/gitlab-runner
 RUN useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash
+
+USER gitlab-runner
+
+ENV JAVA_HOME /opt/jdk
+ENV PATH $PATH:$JAVA_HOME
+ENV PATH /opt/jdk/bin:${PATH}
+RUN echo "export JAVA_HOME=/opt/jdk" >> /etc/profile
+
+
+ENV MAVEN_VERSION 3.5.4
+ENV MAVEN_HOME /usr/lib/mvn
+ENV PATH $MAVEN_HOME/bin:$PATH
+RUN echo "export MAVEN_HOME=/usr/lib/mvn" >> /etc/profile
+RUN echo "export PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH" >> /etc/profile
+
 RUN gitlab-runner install --user=gitlab-runner --working-directory=/home/gitlab-runner
 RUN gitlab-runner start
 
