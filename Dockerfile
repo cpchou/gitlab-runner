@@ -14,14 +14,18 @@ USER gitlab-runner
 ENV JAVA_HOME /opt/jdk
 ENV PATH $PATH:$JAVA_HOME
 ENV PATH /opt/jdk/bin:${PATH}
-RUN echo "export JAVA_HOME=/opt/jdk" >> /etc/profile
 
 
 ENV MAVEN_VERSION 3.5.4
 ENV MAVEN_HOME /usr/lib/mvn
 ENV PATH $MAVEN_HOME/bin:$PATH
+
+USER root
+RUN echo "export JAVA_HOME=/opt/jdk" >> /etc/profile
 RUN echo "export MAVEN_HOME=/usr/lib/mvn" >> /etc/profile
 RUN echo "export PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH" >> /etc/profile
+
+USER gitlab-runner
 
 RUN gitlab-runner install --user=gitlab-runner --working-directory=/home/gitlab-runner
 RUN gitlab-runner start
