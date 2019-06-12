@@ -25,7 +25,6 @@ RUN echo "export JAVA_HOME=/opt/jdk" >> /etc/profile
 RUN echo "export MAVEN_HOME=/usr/lib/mvn" >> /etc/profile
 RUN echo "export PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH" >> /etc/profile
 
-USER gitlab-runner
 
 RUN gitlab-runner install --user=gitlab-runner --working-directory=/home/gitlab-runner
 RUN gitlab-runner start
