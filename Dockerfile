@@ -1,4 +1,5 @@
-FROM cpchou/ubuntu_jdk8
+#FROM cpchou/ubuntu_jdk8
+FROM cpchou/ubuntu_openjdk8
 
 RUN export DEBIAN_FRONTEND=noninteractive
 RUN apt-get install -y tzdata
